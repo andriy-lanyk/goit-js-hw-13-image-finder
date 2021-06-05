@@ -5,6 +5,8 @@ export default {
   getPhoto: function () {
     return fetch(
       `${URL}?image_type=photo&orientation=horizontal&q=${'cat'}&page=${1}&per_page=12&key=${API_KEY}`,
-    ).then(res => JSON.res);
+    ).then(res => {
+      return res.json();
+    });
   },
 };
