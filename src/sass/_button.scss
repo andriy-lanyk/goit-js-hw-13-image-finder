@@ -1,0 +1,15 @@
+.button {
+  display: block;
+  padding: 5px 15px;
+  margin: 0 auto;
+  font-size: 22px;
+  font-weight: 600;
+  color: #212121;
+  background-color: rgba(65, 105, 225, 0.4);
+  border: 2px solid blue;
+  border-radius: 6%;
+}
+
+.button.hidden {
+  opacity: 0;
+}
