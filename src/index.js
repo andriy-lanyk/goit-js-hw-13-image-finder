@@ -32,13 +32,16 @@ function getQuery(e) {
   query = e.target.value.toLowerCase().trim();
 
   if (query === '') {
-    gallery.innerHTML = '';
-    pageNumber = 1;
-    button.classList.add('hidden');
+    resetGallery();
     return;
   }
 
   apiObject.getImages(query, pageNumber).then(({ hits }) => {
+    if (hits.length === 0) {
+      resetGallery();
+      errorNotification();
+      return;
+    }
     gallery.innerHTML = createImagesListTpl(hits);
     button.classList.remove('hidden');
     pageNumber += 1;
@@ -61,6 +64,14 @@ function loadMoreImages() {
   }
 }
 
+function errorNotification() {
+  error({
+    text: 'Please, enter the correct query for a image',
+    maxTextHeight: null,
+    delay: 4000,
+  });
+}
+
 function successNotification() {
   success({
     text: 'Images have been loaded successfully',
@@ -73,15 +84,19 @@ function ShowBigImg(e) {
   const target = e.target;
   if (target.hasAttribute('src')) {
     const largeSrc = target.dataset.src;
-    console.log('largeSrc: ', largeSrc);
     Swal.fire({
       imageUrl: `${largeSrc}`,
       heightAuto: false,
-      width: '1280px',
-      height: '85%',
-      imageHeight: '700px',
+      width: '1480px',
+      imageHeight: '650px',
       background: '#c0c0c0',
       imageAlt: 'A tall image',
     });
   }
+}
+
+function resetGallery() {
+  gallery.innerHTML = '';
+  pageNumber = 1;
+  button.classList.add('hidden');
 }
