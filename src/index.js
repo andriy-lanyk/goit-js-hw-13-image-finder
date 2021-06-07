@@ -1,10 +1,8 @@
 import debounce from 'lodash.debounce';
-import { alert, notice, info, success, error } from '@pnotify/core';
+import modal from 'picoModal';
+import { success, error } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
-// import * as basicLightbox from 'basiclightbox';
-import Swal from 'sweetalert2';
-import 'sweetalert2/src/sweetalert2.scss';
 import './sass/main.scss';
 import apiObject from './apiService.js';
 import createFormTpl from './tamplete/createForm.hbs';
@@ -84,14 +82,13 @@ function ShowBigImg(e) {
   const target = e.target;
   if (target.hasAttribute('src')) {
     const largeSrc = target.dataset.src;
-    Swal.fire({
-      imageUrl: `${largeSrc}`,
-      heightAuto: false,
-      width: '1480px',
-      imageHeight: '650px',
-      background: '#c0c0c0',
-      imageAlt: 'A tall image',
-    });
+    modal({
+      content: `<img class='large-img' src=${largeSrc} alt='A tall image';/>`,
+      overlayStyles: {
+        backgroundColor: '#169',
+        opacity: 0.75,
+      },
+    }).show();
   }
 }
 
