@@ -1,5 +1,4 @@
 import debounce from 'lodash.debounce';
-import modal from 'picoModal';
 import { success, error } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
@@ -15,7 +14,6 @@ document.body.insertAdjacentHTML('afterbegin', createGalleryUlTpl());
 document.body.insertAdjacentHTML('afterbegin', createFormTpl());
 
 const gallery = document.querySelector('.gallery');
-gallery.addEventListener('click', ShowBigImg);
 
 const input = document.querySelector('[name="query"]');
 input.addEventListener('input', debounce(getQuery, 500));
@@ -76,20 +74,6 @@ function successNotification() {
     maxTextHeight: null,
     delay: 2500,
   });
-}
-
-function ShowBigImg(e) {
-  const target = e.target;
-  if (target.hasAttribute('src')) {
-    const largeSrc = target.dataset.src;
-    modal({
-      content: `<img class='large-img' src=${largeSrc} alt='A tall image';/>`,
-      overlayStyles: {
-        backgroundColor: '#169',
-        opacity: 0.75,
-      },
-    }).show();
-  }
 }
 
 function resetGallery() {
