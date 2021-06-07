@@ -90,7 +90,6 @@ function ShowBigImg(e) {
       width: '1480px',
       imageHeight: '650px',
       background: '#c0c0c0',
-      imageAlt: 'A tall image',
     });
   }
 }
