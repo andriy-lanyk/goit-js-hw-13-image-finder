@@ -52,6 +52,10 @@ function loadMoreImages() {
     apiObject.getImages(query, pageNumber).then(({ hits }) => {
       gallery.insertAdjacentHTML('beforeend', createImagesListTpl(hits));
       pageNumber += 1;
+      if (hits.length < 12) {
+        button.classList.add('hidden');
+        return;
+      }
       let scrollToElement = gallery.children[gallery.children.length - 12];
       scrollToElement.scrollIntoView({
         behavior: 'smooth',
