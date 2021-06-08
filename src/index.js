@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import * as basicLightbox from 'basiclightbox';
 import { success, error } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
@@ -14,6 +15,7 @@ document.body.insertAdjacentHTML('afterbegin', createGalleryUlTpl());
 document.body.insertAdjacentHTML('afterbegin', createFormTpl());
 
 const gallery = document.querySelector('.gallery');
+gallery.addEventListener('click', showBigImg);
 
 const input = document.querySelector('[name="query"]');
 input.addEventListener('input', debounce(getQuery, 500));
@@ -50,11 +52,10 @@ function loadMoreImages() {
     apiObject.getImages(query, pageNumber).then(({ hits }) => {
       gallery.insertAdjacentHTML('beforeend', createImagesListTpl(hits));
       pageNumber += 1;
-      successNotification();
       let scrollToElement = gallery.children[gallery.children.length - 12];
       scrollToElement.scrollIntoView({
         behavior: 'smooth',
-        block: 'end',
+        block: 'start',
       });
     });
   }
@@ -80,4 +81,18 @@ function resetGallery() {
   gallery.innerHTML = '';
   pageNumber = 1;
   button.classList.add('hidden');
+}
+
+function showBigImg(e) {
+  const target = e.target;
+  if (target.hasAttribute('src')) {
+    const LargeSrc = target.dataset.src;
+    const instance = basicLightbox
+      .create(
+        `
+    <img src=${LargeSrc} alt=${target.alt} >
+`,
+      )
+      .show();
+  }
 }
